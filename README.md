@@ -1,0 +1,2 @@
+# AttachmentViewer
+Gristの大型添付ファイルビューワーカスタムウィジエットです
