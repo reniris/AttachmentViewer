@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>A cheap and cheerful image viewer</title>
+    <title>Attachments image viewer</title>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
     <style>
       html, body, textarea {
@@ -44,7 +44,7 @@
         }
       }
       grist.ready({
-        columns: [{ name: "ImageUrl", title: 'Image URL', type: 'Text'}],
+        columns: [{ name: "ImageFile", title: 'Image File', type: 'Attachments'}],
         requiredAccess: 'read table'
       });
       // Helper function that reads first value from a table with a single column.
@@ -56,28 +56,14 @@
         showError("");
         viewer.style.display = 'none';
       });
-      grist.onRecord(function(record) {
-        // If user picked all columns, this helper function will return a mapped record.
-        const mapped = grist.mapColumnNames(record);
-        // We will fallback to reading a value from a single column to
-        // support old way of mapping (exposing only a single column).
-        // New widgets should only check if mapped object is truthy.
-        const data = mapped ? mapped.ImageUrl : singleColumn(record);
-        delete record.id;
-        var keys = Object.keys(record);
-        if (data === undefined) {
-          showError("Please choose a column to show in the Creator Panel.");
-        } else {
-          showError("");
-          if (!data) {
-            viewer.style.display = 'none';
-          } else {
-            var parts = data.split(' ');
-            var url = parts[parts.length - 1];
-            viewer.src = url;
-            viewer.style.display = 'block';
-          }
-        }
+      
+      grist.onRecord(async (record) => {
+      const tokenInfo = await grist.docApi.getAccessToken({readOnly: true});
+      const img = document.getElementById('viewer');
+      const id = record.ImageFile[0];  // get an id of an attachment - there could be several
+                                // in a cell, for this example we just take the first.
+      const src = `${tokenInfo.baseUrl}/attachments/${id}/download?auth=${tokenInfo.token}`;
+      img.setAttribute('src', src);
       });
     </script>
   </body>
