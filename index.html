@@ -66,9 +66,11 @@
                                 // in a cell, for this example we just take the first.
         const src = `${tokenInfo.baseUrl}/attachments/${id}/download?auth=${tokenInfo.token}`;
         //viewer.src = src;
-        //img.setAttribute('src', src);        
+        //img.setAttribute('src', src);  
         
-        if (id === undefined) {
+        showError(record.ImageFile);
+        
+        /*if (id === undefined) {
           showError("Please choose a column to show in the Creator Panel.");
         } else {
           showError("");
@@ -78,7 +80,7 @@
             viewer.src = src;
             viewer.style.display = 'block';
           }
-        }
+        }*/
         console.log(tokenInfo.baseUrl)
       });
     </script>
