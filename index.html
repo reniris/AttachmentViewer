@@ -65,9 +65,20 @@
         const id = record.ImageFile[0];  // get an id of an attachment - there could be several
                                 // in a cell, for this example we just take the first.
         const src = `${tokenInfo.baseUrl}/attachments/${id}/download?auth=${tokenInfo.token}`;
-        viewer.src = src;
+        //viewer.src = src;
         //img.setAttribute('src', src);        
         
+        if (id === undefined) {
+          showError("Please choose a column to show in the Creator Panel.");
+        } else {
+          showError("");
+          if (!src) {
+            viewer.style.display = 'none';
+          } else {
+            viewer.src = src;
+            viewer.style.display = 'block';
+          }
+        }
         console.log(tokenInfo.baseUrl)
       });
     </script>
