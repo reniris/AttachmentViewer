@@ -58,14 +58,16 @@
       });
       
       grist.onRecord(async (record) => {
-      const tokenInfo = await grist.docApi.getAccessToken({readOnly: true});
-      const img = document.getElementById('viewer');
-      const id = record.ImageFile[0];  // get an id of an attachment - there could be several
-                                // in a cell, for this example we just take the first.
-      const src = `${tokenInfo.baseUrl}/attachments/${id}/download?auth=${tokenInfo.token}`;
-      img.setAttribute('src', src);
+        console.log("Debug Massage onRecord ${record.ImageFile[0]}");
         
-        console.log("Debug Massage");
+        const tokenInfo = await grist.docApi.getAccessToken({readOnly: true});
+        const img = document.getElementById('viewer');
+        const id = record.ImageFile[0];  // get an id of an attachment - there could be several
+                                // in a cell, for this example we just take the first.
+        const src = `${tokenInfo.baseUrl}/attachments/${id}/download?auth=${tokenInfo.token}`;
+        viewer.src = src;
+        //img.setAttribute('src', src);        
+        
         console.log(tokenInfo.baseUrl)
       });
     </script>
