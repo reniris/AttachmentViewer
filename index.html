@@ -58,23 +58,22 @@
       });
       
       grist.onRecord(async (record) => {
-        console.log('Debug Massage onRecord ${record}');
-        
-        const img = document.getElementById('viewer');
+        console.log('Debug Massage onRecord Start');  
         const id = record.ImageFile[0];  // get an id of an attachment - there could be several
                                 // in a cell, for this example we just take the first.
         console.log('Debug Massage onRecord id ${id}');
         
         const tokenInfo = await grist.docApi.getAccessToken({readOnly: true});
         const src = `${tokenInfo.baseUrl}/attachments/${id}/download?auth=${tokenInfo.token}`;
+        
         //viewer.src = src;
+        
+        //const img = document.getElementById('viewer');
         //img.setAttribute('src', src);       
         
-        console.log('Debug Massage onRecord tokenInfo ${tokenInfo}');
+        console.log('Debug Massage onRecord tokenInfo ${tokenInfo.baseUrl}');
         
-        showError(record.ImageFile);
-        
-        /*if (id === undefined) {
+        if (id === undefined) {
           showError("Please choose a column to show in the Creator Panel.");
         } else {
           showError("");
@@ -84,8 +83,8 @@
             viewer.src = src;
             viewer.style.display = 'block';
           }
-        }*/
-        console.log(tokenInfo.baseUrl)
+        }
+        console.log('Debug Massage onRecord End')
       });
     </script>
   </body>
