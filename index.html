@@ -64,6 +64,9 @@
                                 // in a cell, for this example we just take the first.
       const src = `${tokenInfo.baseUrl}/attachments/${id}/download?auth=${tokenInfo.token}`;
       img.setAttribute('src', src);
+        
+        console.log("Debug Massage");
+        console.log(tokenInfo.baseUrl)
       });
     </script>
   </body>
